@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../vue.js"></script>
+    <style>
+        .wrap {
+            display: flex;
+        }
+
+        .wrap>div {
+            margin: 0 20px;
+            width: 30px;
+            text-align: center;
+        }
+
+        .wrap>button {
+            width: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 認識Vue:
+    1. 想讓Vue工作，就必須創建一個Vue實例，且要傳入一個配置對象
+    2. root容器裡的代碼依然符合html規範，只不過混入了一些特殊的Vue語法。
+    3. root容器裡的代碼被稱為[Vue模版] 
+    -->
+
+    <!-- 準備一個容器 -->
+    <div id="root">
+        <h1>{{title}}</h1>
+        <div class="wrap">
+            <button v-on:click="count++">+</button>
+            <div>{{count}}</div>
+            <button v-on:click="count>0?count--:0">-</button>
+        </div>
+    </div>
+
+    <script>
+        // 創建Vue實例
+        const vm = new Vue({
+            // el用於指定當前Vue實例為哪個容器服務，值通常為css選擇器字符串。
+            el: '#root',
+            // data中用於存資料，資料供el指定的容器去使用。
+            data: {
+                title: 'Hello Vue',
+                count: 0,
+            }
+        });
+    </script>
+</body>
+
+</html>
