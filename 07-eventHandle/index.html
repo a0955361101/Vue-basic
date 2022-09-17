@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eventHandle</title>
+    <script src="../vue.js"></script>
+</head>
+
+<body>
+    <!-- 
+    事件的基本使用:
+    1. 使用 v-on:事件 或 @事件 綁定事件，其中事件代表事件名
+    2. 事件的回調需要配置在 methods 物件中，最終會在 vm 上
+    3. methods 中配置的函數，不要用箭頭函數!否則 this 就不是 vm 了
+    4. methods 中配置的函數，都是被 Vue 所管理的函數， this 的指向是 vm 或 組件實例對象
+    5. @click="demo" 和 @click="demo($event)" 效果一致，但後者可以傳參數 
+    -->
+    <div id="root">
+        <!-- 如果沒有傳入參數，還是可以使用 event -->
+        <button v-on:click="showInfo1">點我提示訊息</button>
+        <!-- @click 為簡寫 -->
+        <!-- 如果傳參還要使用 event 需要帶入 $event -->
+        <button @click="showInfo2(66,$event)">點我提示訊息</button>
+        {{count}}
+    </div>
+    <script>
+
+        const vm = new Vue({
+            data: {
+                count: 0
+            },
+            methods: {
+                showInfo1(e) {
+                    console.log(e.target);
+                    // console.log(this); // 此處的 this 是 vm ， 如果寫成箭頭函式會是 window
+                    alert('hi');
+                },
+                showInfo2(id, e) {
+                    console.log(e.target);
+                    console.log(id);
+                    // alert('安安');
+                }
+            }
+        }).$mount('#root')
+    </script>
+</body>
+
+</html>
