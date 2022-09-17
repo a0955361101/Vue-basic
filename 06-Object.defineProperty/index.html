@@ -10,8 +10,16 @@
 </head>
 
 <body>
-
-
+    <!--
+    1. Vue中的數據代理:
+    通過 vm 物件來代理data物件中的屬性操作(讀/寫)
+    2. Vue中數據代理的好處:
+    更加方便的操作data中的數據
+    3. 基本原理:
+    通過Object.defineProperty()把 data 物件中所有屬性添加到 vm 上
+    為每一個添加到 vm 上的屬性，都指定一個 getter / setter
+    在 getter / setter 內部去操作(讀/寫) data 中對應的屬性 
+    -->
     <script>
         let number = 18;
         let person = {
