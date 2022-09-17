@@ -7,9 +7,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>eventHandle</title>
     <script src="../vue.js"></script>
+    <style>
+        * {
+            margin-top: 20px;
+        }
+
+        .demo1 {
+            height: 50px;
+            background-color: #7cc;
+        }
+
+        .box1 {
+            padding: 5px;
+            background-color: #7cc;
+        }
+
+        .box2 {
+            padding: 5px;
+            background-color: #faa;
+        }
+
+        .list {
+            width: 200px;
+            height: 200px;
+            background-color: #888;
+            overflow: auto;
+        }
+
+        li {
+            height: 100px;
+        }
+    </style>
 </head>
 
 <body>
+    <!--
+    Vue 中的事件修飾符
+    1. prevent: 阻止默認事件(常用)
+    2. stop: 阻止事件冒泡(常用)
+    3. once: 事件只觸發一次(常用)
+    4. capture: 使用事件的捕獲模式
+    5. self: 只有 event.target 是當前操作的元素是才觸發事件
+    6. passive: 事件的默認行為立即執行，無需等待事件回調執行完畢 
+    -->
+
     <!-- 
     事件的基本使用:
     1. 使用 v-on:事件 或 @事件 綁定事件，其中事件代表事件名
@@ -25,6 +66,38 @@
         <!-- 如果傳參還要使用 event 需要帶入 $event -->
         <button @click="showInfo2(66,$event)">點我提示訊息</button>
         {{count}}
+        <!-- prevent 阻止默認行為 -->
+        <!-- <a href="https://a0955361101.github.io/Portfolio/" @click.prevent="showInfo">點我</a> -->
+
+        <!-- stop 阻止冒泡 -->
+        <!-- <div class="demo1" @click="showInfo">
+            <button @click.stop=" showInfo">阻止冒泡</button>
+        </div> -->
+
+        <!-- once 事件只觸發一次 -->
+        <!-- <button @click.once=" showInfo">只觸發一次</button> -->
+
+        <!-- capture 使用事件捕獲捕獲 -->
+        <div class="box1" @click.capture="showMsg(1)">
+            div1
+            <div class="box2" @click="showMsg(2)">
+                div2
+            </div>
+        </div>
+
+        <!-- self 只有 event.target 是當前操作的元素是才觸發事件 -->
+        <div class="demo1" @click.self="showInfo">
+            <button @click="showInfo">點我</button>
+        </div>
+        <!-- passive: 事件的默認行為立即執行，無需等待事件回調執行完畢  -->
+        <ul class="list" @wheel.passive="demo">
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+        </ul>
+
+    </div>
     </div>
     <script>
 
@@ -42,6 +115,19 @@
                     console.log(e.target);
                     console.log(id);
                     // alert('安安');
+                },
+                showInfo(e) {
+                    console.log(e.target);
+                    // alert('yo');
+                },
+                showMsg(msg) {
+                    console.log(msg);
+                },
+                demo() {
+                    for (let i = 0; i < 10000; i++) {
+                        console.log('#');
+                    }
+                    console.log('結束');
                 }
             }
         }).$mount('#root')
