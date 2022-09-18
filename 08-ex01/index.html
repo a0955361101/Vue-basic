@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>姓名案例-插值語法/methods/計算屬性實現</title>
+    <script src="../vue.js"></script>
+</head>
+
+<body>
+    <!--
+    計算屬姓:
+    1. 定義: 要用的屬性不存在，要通過已有屬性計算得來
+    2. 原理: 底層借助了 objcet.defineproperty 方法提供的 getter 和 setter
+    3. get 函數什麼時候執行?
+    (1). 初次讀取時執行一次
+    (2). 當依賴的數據發生變化時會被再次調用
+    4. 優勢: 與 methods 實現相比，內部有緩存機制(復用)，效率更高，調試方便
+    5. 備註:
+    (1). 計算屬性最終會出現在 vm 上，直接讀取使用即可
+    (2). 如果計算屬性要被修改，那必須寫 set 函數去響應修改，且 set 中要引起計算時依賴的數據發生改變
+    -->
+    <div id="root">
+        姓: <input type="text" v-model="firstName">
+        名: <input type="text" v-model="lastName">
+        <!-- 全名: <span>{{firstName}}{{lastName}}</span> -->
+        <!-- 全名: <span>{{fullName()}}</span> -->
+        全名: <span>{{fullName}}</span>
+    </div>
+    <script>
+
+        const vm = new Vue({
+            data: {
+                firstName: '黃',
+                lastName: '少天',
+            },
+            computed: {
+                // 完整寫法
+                fullName: {
+                    // get 有什麼作用? 當有人讀取 fullName 時， get 就會被調用，且返回值視為 fullName 的值
+                    // get 什麼時候調用? 1. 初次讀取 fullName 時 2. 所依賴的數據發生變化時
+                    // get() {
+                    //     // 此處 this 為 vm
+                    //     return this.firstName + '-' + this.lastName;
+                    // },
+                    // set 什麼時候調用? 當 fullName被修改的時候
+                    // set(vlaue) {
+                    //     const arr = vlaue.split('-');
+                    //     this.firstName = arr[0];
+                    //     this.lastName = arr[1];
+                    // }
+                },
+                // 簡寫
+                fullName: function () {
+                    return this.firstName + '-' + this.lastName;
+                }
+            },
+            // methods: {
+            //     fullName() {
+            //         return this.firstName.slice(0, 3) + this.lastName;
+            //     }
+            // }
+        }).$mount('#root');
+    </script>
+</body>
+
+</html>
