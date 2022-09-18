@@ -5,11 +5,21 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>姓名案例-插值語法/methods/計算屬性實現</title>
+    <title>姓名案例-插值語法/methods/計算屬性/watch實現</title>
     <script src="../vue.js"></script>
 </head>
 
 <body>
+    <!-- 
+    computed 和 watch 之間的區別:
+    1. computed 能完成的功能， watch 都可以完成
+    2. watch 能完成的功能， computed 不一定能完成，例如: watch 可以進行異步操作
+    兩個重要的小原則:
+    1. 所被 Vue 管理的函數，最好寫成普通函式，這樣 this 的指向才是 vm 或 組件實例對象
+    2. 所有不被 Vue 所管理的函數(定時器的回調函數. ajax的回調函數等)，最好寫成箭頭函數，
+    這樣 this 的指向才是 vm 或 組件實例對象 
+    -->
+
     <!--
     計算屬姓:
     1. 定義: 要用的屬性不存在，要通過已有屬性計算得來
@@ -35,6 +45,7 @@
             data: {
                 firstName: '黃',
                 lastName: '少天',
+                fullName: '黃-少天'
             },
             computed: {
                 // 完整寫法
@@ -53,10 +64,20 @@
                     // }
                 },
                 // 簡寫
-                fullName: function () {
-                    return this.firstName + '-' + this.lastName;
-                }
+                // fullName: function () {
+                //     return this.firstName + '-' + this.lastName;
+                // }
             },
+            watch: {
+                firstName(val) {
+                    setTimeout(() => {
+                        this.fullName = val + '-' + this.lastName;
+                    }, 1000);
+                },
+                lastName(val) {
+                    this.fullName = this.firstName + '-' + val;
+                }
+            }
             // methods: {
             //     fullName() {
             //         return this.firstName.slice(0, 3) + this.lastName;
