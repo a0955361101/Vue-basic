@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../vue.js"></script>
+    <title>綁定樣式</title>
+    <style>
+        .test {
+            width: 200px;
+            height: 200px;
+        }
+
+        .red {
+            background-color: red;
+        }
+
+        .green {
+            background-color: green;
+        }
+
+        .blue {
+            background: blue;
+        }
+
+        .bgc {
+            background-color: #faa;
+        }
+
+        .border {
+            border: 1px solid #333;
+        }
+
+        .br {
+            border-radius: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="root">
+        <!-- 綁定 class樣式--字符串寫法，適用於: 樣式的纇名不確定，需要動態指定 -->
+        <div @click="changeColor" :class="color" class="test">{{name}}</div>
+
+        <!-- 綁定class樣式--陣列寫法，適用於: 要綁定的樣式個數不確定.名字也不確定 -->
+        <div :class="classArr" class="test">{{name}}</div>
+
+        <!-- 綁定class樣式--物件寫法，適用於: 要綁定的樣式個數確定.名字也確定，但要動態決定用不用 -->
+        <div :class="classObj" class="test">{{name}}</div>
+    </div>
+
+    <script type="text/javascript">
+        const vm = new Vue({
+            data: {
+                name: 'style',
+                color: 'red',
+                classArr: ['bgc', 'border', 'br'],
+                classObj: {
+                    bgc: false,
+                    border: false
+                }
+            },
+            methods: {
+                changeColor() {
+                    const arr = ['red', 'green', 'blue'];
+                    // Math.floor向下取整
+                    this.color = arr[Math.floor(Math.random() * 3)];
+                }
+            }
+        }).$mount('#root');;
+    </script>
+</body>
+
+</html>
