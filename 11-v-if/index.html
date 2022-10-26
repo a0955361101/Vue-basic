@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>條件渲染</title>
+    <script src="../vue.js"></script>
+</head>
+
+<body>
+    <!-- 條件渲染:
+    1.v-if
+    寫法:
+    (1).v-if="表達式"
+    (2).v-else-if="表達式"
+    (3).v-else="表達式"
+    適用於: 切換頻率較低的場景
+    特點: 不展示的 DOM 元素直接被移除
+    注意: v-if 可以和 : v-else-if.v-else一起使用,但結構不能被打斷
+    2.v-show
+    寫法: v-show="表達式"
+    適用於: 切換頻率較高的場景
+    特點: 不展示的 DOM 元素未被移除,僅僅是使用樣式隱藏掉
+    3.備註: 使用 v-if 時,元素可能無法獲取到,而使用 v-show 一定可以獲取到 -->
+
+    <!-- 使用v-show做條件渲染 -->
+    <!-- <div id="root" v-show="on">{{name}}</div> -->
+
+    <!-- 使用v-if做條件渲染 -->
+    <div id="root" v-if="on">{{name}}
+        <h2>當前的值是: {{num}}</h2>
+        <button @click="num++">clcik</button>
+        <!-- v-else 和 v-else-if -->
+        <!-- <div v-if="num === 1">Angular</div>
+        <div v-else-if="num === 2">React</div>
+        <div v-else-if="num === 3">Vue</div>
+        <div v-else>ccc</div> -->
+
+        <!-- template只能搭配 v-if 不能搭配 v-show -->
+        <template v-if="num === 1">
+            <div>安</div>
+            <div>安安</div>
+            <div>安安安</div>
+        </template>
+
+    </div>
+</body>
+<script>
+    const vm = new Vue({
+        el: '#root',
+        data: {
+            name: 'test',
+            on: true,
+            num: 0
+        }
+    });
+</script>
+
+</html>
