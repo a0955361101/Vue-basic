@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>搜尋</title>
+    <script src="../vue.js"></script>
+</head>
+
+<body>
+    <div id="root">
+        <h2>人員列表</h2>
+        <input type="text" placeholder="請輸入名字" v-model="keyWord">
+        <ul>
+            <li v-for="item in filPerson" :key="item.id">
+                {{item.name}} - {{item.age}} - {{item.sex}}
+            </li>
+        </ul>
+    </div>
+</body>
+<script>
+    const vm = new Vue({
+        el: '#root',
+        data: {
+            keyWord: '',
+            persons: [
+                { id: '001', name: '馬冬梅', age: 19, sex: '女' },
+                { id: '002', name: '周冬雨', age: 20, sex: '女' },
+                { id: '003', name: '周杰倫', age: 21, sex: '男' },
+                { id: '004', name: '溫兆倫', age: 22, sex: '男' },
+            ],
+            // filPerson: [],
+        },
+        // 使用 watch
+        // watch: {
+        //     keyWord: {
+        //         immediate: true,
+        //         handler(val) {
+        //             this.filPerson = this.persons.filter((v) => {
+        //                 return v.name.indexOf(val) !== -1;
+        //             });
+        //         }
+        //     }
+        // }
+        computed: {
+            filPerson() {
+                return this.persons.filter((v) => {
+                    return v.name.indexOf(this.keyWord) !== -1;
+                });
+            }
+        }
+    });
+</script>
+
+</html>
