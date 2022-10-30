@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>列表渲染</title>
+    <script src="../vue.js"></script>
+</head>
+
+<body>
+    <!-- v-for指令:
+    1.用於展示列表數據
+    2.語法: v-for="(item, index) in xxx" :key="item.sid"
+    3.可遍歷: 陣列.物件.字串.只定次數 -->
+
+    <!-- key 的作用
+    1. 虛擬 DOM 對象的標示,當數據發生變化時, Vue會根據[新數據]生成[新的虛擬 DOM],
+    隨後 Vue 進行 [新虛擬 DOM] 與 [舊虛擬 DOM] 的差異比較,比較規則如下:
+
+    2. 對比規則:
+    (1).舊虛擬 DOM 中找到了與新虛擬 DOM 相同的 Key:
+    一.若虛擬 DOM 中內容沒變,直接使用之前的真實 DOM
+    二.若虛擬 DOM 中內容變了,則生成新的真實 DOM ,隨後替換掉頁面中之前的真實 DOM
+    (2).舊虛擬 DOM 中未找到與新虛擬 DOM 相同的 Key
+    創建新的真實 DOM ,隨後渲染到頁面
+
+    3. 用 index 作為 Key 可能會引發的問題:
+    (1).若對數據進行: 逆序添加.逆序刪除等破壞順序操作:
+    會產生沒有必要的真實 DOM 更新 ==> 介面效果沒問題,但效率低
+    (2).如果結構中還包含輸入類的 DOM:
+    會產生錯誤 DOM 更新 ==> 介面有問題
+
+    4. 開發中如何選擇 Key?:
+    (1).最好使用每條數據的唯一標示作為 Key ,比如 id.手機號.身分證號.學號等唯一值
+    (2).如果不存在對數據的逆序添加.逆序刪除等破壞順序操作,僅用於列表渲染用於展示,使用 index 作為 Key 是沒有問題的 -->
+
+    <div id="root">
+        人員列表
+        <ul>
+            <li v-for="item in persons" :key="item.id">{{item.name}}--{{item.age}}</li>
+        </ul>
+    </div>
+</body>
+<script>
+    const vm = new Vue({
+        el: '#root',
+        data: {
+            persons: [
+                { id: '001', name: '張三', age: 18 },
+                { id: '002', name: '張愈', age: 19 },
+                { id: '003', name: '張四', age: 17 },
+            ]
+        }
+    });
+</script>
+
+</html>
